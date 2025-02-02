@@ -1,0 +1,32 @@
+@use './vars.scss';
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: rgb(238, 238, 238);
+  height: 100dvh;
+  padding: 20px 0;
+  color: vars.$main-color;
+  line-height: 1;
+}
+#app {
+  height: 100%;
+}
+.app-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  height: 100%;
+  background-color: vars.$background-color;
+}
+
+.title-xl {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.title-l {
+  font-size: 24px;
+  font-weight: 700;
+}
