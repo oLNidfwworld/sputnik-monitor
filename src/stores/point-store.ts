@@ -1,10 +1,10 @@
-import { ref, computed, triggerRef } from 'vue'
+import { ref, computed, triggerRef, shallowRef } from 'vue'
 import { defineStore } from 'pinia'
 import { round, getRandomArbitrary } from '@/utils/number-functions'
 import type { Point, PointForm } from '@/types/point'
 
 export const usePointStore = defineStore('point-store', () => {
-  const points = ref<Point[]>([])
+  const points = shallowRef<Point[]>([])
 
   function generatePoints() {
     for (let i = 0; i < 10_000; i++) {
@@ -35,10 +35,21 @@ export const usePointStore = defineStore('point-store', () => {
   }
   const currentPointData = computed(() =>
     points.value.find((point) => point.id === currentPointId.value),
-  )
+  );
+
+  const searchQuery = ref<string>('');
+  function setSearchQuery( newValue : string ) {
+    searchQuery.value = newValue;
+  }
+  
+  const filteredPoints = computed(( ) => points.value.filter( point => point.main.name.indexOf(searchQuery.value) !== -1))
 
   return {
     points,
+    filteredPoints,
+
+    searchQuery,
+    setSearchQuery,
 
     currentPointId,
     setCurrentPointData,

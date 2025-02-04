@@ -30,7 +30,7 @@ const modelSelected = defineModel<number[]>({
     <div v-bind="containerProps">
         <div v-bind="wrapperProps">
             <div class="card" @click="setCurrentPointId(item.data.id)"
-                :class="{ 'current': currentPointId === item.data.id }" v-for="item in list" :key="item.index">
+                :class="{ 'current': currentPointId === item.data.id }" v-for="item in list" :key="item.data.id">
                 <div class="card__wrapper">
                     <div class="flex">
                         <InputCheckbox v-model="modelSelected" :value="item.data.id">
