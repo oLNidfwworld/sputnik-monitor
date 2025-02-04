@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs } from 'vue';
+import { toRefs, watch } from 'vue';
 import InputCheckbox from './input-checkbox.vue';
 import { useVirtualList } from '@vueuse/core';
 import { usePointStore } from '@/stores/point-store';
@@ -16,7 +16,13 @@ const pointStore = usePointStore();
 const { setCurrentPointId } = usePointStore();
 const { currentPointId } = storeToRefs(pointStore);
 
-const { list, wrapperProps, containerProps } = useVirtualList(points, {
+watch( ( ) => points.value, function (newVal, oldVal) { 
+    if ( newVal.length > oldVal.length ) {
+        scrollTo(points.value.length - 1);
+    }
+})
+
+const { list, wrapperProps, containerProps, scrollTo } = useVirtualList(points, {
     'itemHeight': 90
 });
 

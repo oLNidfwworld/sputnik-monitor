@@ -21,7 +21,24 @@ export const usePointStore = defineStore('point-store', () => {
       })
     }
   }
-  generatePoints()
+  generatePoints() 
+  
+  function createNewPoint( ){
+    const newId = Math.max(...points.value.map(item => item.id)) + 1;
+    points.value.push({
+      id : newId,
+      address : 'Адрес',
+      main: {
+        code: 0,
+        name:  `Точка №${newId + 1}`,
+        rad: 0,
+        lat: 0,
+        lon: 0
+      }
+    });
+    setCurrentPointId(newId);
+    triggerRef(points);
+  }
 
   const currentPointId = ref(points.value[0].id)
   function setCurrentPointId(id: number) {
@@ -31,6 +48,7 @@ export const usePointStore = defineStore('point-store', () => {
     const elementToEdit = points.value.find((point) => point.id === currentPointId.value)
     if (elementToEdit) {
       elementToEdit.main = data
+      triggerRef(points);
     }
   }
   const currentPointData = computed(() =>
@@ -55,5 +73,7 @@ export const usePointStore = defineStore('point-store', () => {
     setCurrentPointData,
     setCurrentPointId,
     currentPointData,
+
+    createNewPoint
   }
 })
