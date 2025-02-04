@@ -12,9 +12,8 @@ const pointStore = usePointStore();
 const { filteredPoints } = storeToRefs(pointStore);
 const { setSearchQuery } = pointStore;
 
-const selectedPoints = shallowRef<Set<number>>([]);
-
-const isSelectedAll = computed(() => filteredPoints.value.length === selectedPoints.value);
+const selectedPoints = shallowRef<number[]>([]);
+const isSelectedAll = computed(() => filteredPoints.value.length === selectedPoints.value.length);
 function toggleSelect() {
   if (!isSelectedAll.value) {
     const selectedPointsNoRef: number[] = [];
