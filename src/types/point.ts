@@ -1,49 +1,34 @@
-interface IPoint {
+export class Point {
   id: number
   address: string
-  code: number
-  lon: number
-  lat: number
-  rad: number
+  main: {
+    code: number
+    rad: number
+    name: string
+    lon: number
+    lat: number
+  }
 
-  arrivalTimeFrom?: Date
-  arrivalTimeTo?: Date
+  constructor(pointData: Point) {
+    this.id = pointData.id
+    this.address = pointData.address
 
-  arrivalTimeFromFact?: Date
-  arrivalTimeToFact?: Date
-
-  loadingTime?: Date
+    this.main = pointData.main
+  }
 }
 
-export default class Point implements IPoint {
-  id: number
-  address: string
+export class PointForm {
   code: number
+  rad: number
+  name: string
   lon: number
   lat: number
-  rad: number
 
-  arrivalTimeFrom?: Date
-  arrivalTimeTo?: Date
-
-  arrivalTimeFromFact?: Date
-  arrivalTimeToFact?: Date
-
-  loadingTime?: Date
-
-  static _id = 0
-
-  constructor(pointData: Exclude<IPoint, {}>) {
-    this.id = Point._id++
-    this.address = pointData.address
+  constructor(pointData: PointForm) {
     this.code = pointData.code
-    this.lon = pointData.lat
-    this.lat = pointData.lat
     this.rad = pointData.rad
-    this.arrivalTimeFrom = pointData?.arrivalTimeFrom
-    this.arrivalTimeTo = pointData?.arrivalTimeTo
-    this.arrivalTimeFromFact = pointData?.arrivalTimeFromFact
-    this.arrivalTimeToFact = pointData?.arrivalTimeToFact
-    this.loadingTime = pointData?.loadingTime
+    this.name = pointData.name
+    this.lon = pointData.lon
+    this.lat = pointData.lat
   }
 }

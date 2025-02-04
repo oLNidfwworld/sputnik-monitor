@@ -1,15 +1,48 @@
-import { ref, computed } from 'vue'
+import { ref, computed, triggerRef } from 'vue'
 import { defineStore } from 'pinia'
-import Point from '@/types/point'
+import { round, getRandomArbitrary } from '@/utils/number-functions'
+import type { Point, PointForm } from '@/types/point'
 
 export const usePointStore = defineStore('point-store', () => {
   const points = ref<Point[]>([])
 
   function generatePoints() {
-    for (let i = 0; i++; i <= 10_000) {
-      points.value.push(new Point({}))
+    for (let i = 0; i < 10_000; i++) {
+      points.value.push({
+        id: i,
+        address: 'Адрес',
+        main: {
+          code: i + 1,
+          name: `Точка №${i + 1}`,
+          rad: round(getRandomArbitrary(0, 361), 2),
+          lat: round(getRandomArbitrary(-180, 181), 2),
+          lon: round(getRandomArbitrary(-90, 91), 2),
+        },
+      })
     }
   }
+  generatePoints()
 
-  return {}
+  const currentPointId = ref(points.value[0].id)
+  function setCurrentPointId(id: number) {
+    currentPointId.value = id
+  }
+  function setCurrentPointData(data: PointForm) {
+    const elementToEdit = points.value.find((point) => point.id === currentPointId.value)
+    if (elementToEdit) {
+      elementToEdit.main = data
+    }
+  }
+  const currentPointData = computed(() =>
+    points.value.find((point) => point.id === currentPointId.value),
+  )
+
+  return {
+    points,
+
+    currentPointId,
+    setCurrentPointData,
+    setCurrentPointId,
+    currentPointData,
+  }
 })
